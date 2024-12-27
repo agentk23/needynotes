@@ -1,15 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import NavBar from './components/NavBar';
+import ThemeContext from './contexts/ThemeContext';
 
 function App() {
-  const [message, setMessage] = useState('');
-
+  const [theme, setTheme] = useState(null);
   useEffect(() => {
-    fetch('/api')
-      .then(response => response.json())
-      .then(data => setMessage(data.message));
-  }, []);
+    if (!localStorage.getItem('theme')) {
+      localStorage.setItem('theme', 'light');
+      setTheme('light');
+    }
+    else {
+      setTheme(localStorage.getItem('theme'));
+    }
+    console.log(theme);
 
-  return <div>{message}</div>;
+  }, [theme])
+
+  return (
+    <div data-theme={theme}>
+      <ThemeContext.Provider value={[theme, setTheme]}>
+        <NavBar />
+      </ThemeContext.Provider>
+    </div>
+  );
 }
+
 
 export default App;
