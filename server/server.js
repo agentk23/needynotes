@@ -3,13 +3,15 @@ const express = require('express');
 const cors = require('cors');
 // const routes = require('./routes'); // We will set up index.js in routes folder
 const { sequelize } = require('./models'); // referencing models/index.js
+const routes = require('./routes');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 // Bind routes
-// app.use('/api', routes);
+app.use('/api', routes);
 
 // Sync the database (NOT recommended in production with { force: true })
 sequelize.sync().then(() => {

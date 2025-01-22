@@ -2,6 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
         // Sequelize automatically adds an id primary key unless you override it
+        googleId: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: true
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
