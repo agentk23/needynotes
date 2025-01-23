@@ -1,17 +1,18 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-// const routes = require('./routes'); // We will set up index.js in routes folder
 const { sequelize } = require('./models'); // referencing models/index.js
 const routes = require('./routes');
+const authMiddleware = require('./middleware/authMiddleware');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(authMiddleware);
 
 
 // Bind routes
-app.use('/api', routes);
+app.use('/', routes);
 
 // Sync the database (NOT recommended in production with { force: true })
 sequelize.sync().then(() => {
